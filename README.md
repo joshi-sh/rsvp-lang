@@ -13,7 +13,7 @@ RSVP is an object-oriented language that translates to JavaScript. RSVP has no m
    
     Object = objectk identifier (":" identifier)? "{" ReactBlock* "}"
     
-    ReactBlock = reactk eventId ":" EventPattern "{" Statement* "}
+    ReactBlock = reactk eventId (":" EventPattern)? "{" Statement* "}
     
     EventPattern = "{" FieldPattern ("," FieldPattern)* "}"
     
@@ -48,3 +48,14 @@ RSVP's execution is modelled as a group of objects that dispatch events to and r
 RSVP allows for functions as purely functional transforms of inputs to outputs. Transforms do not allow side-effects: side-effects can be caused within an event block by updating a member variable or `raise`ing an event the container understands. 
 
 RSVP translates to ECMAScript 6, and aims to be run under the Nashorn JavaScript Engine. 
+
+## Code examples
+
+    object server{
+        react IO::Network::Request : {method: "GET", userID: id} {
+            raise DB::Request : {table: "users", ID: id, from: "server"}
+        }
+        react DB::Response : {fname: fn, lname: ln}{
+            raise IO::Network::Response : {data : [{fname: fn, lname: ln}]}
+        }
+    }
