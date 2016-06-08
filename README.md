@@ -69,6 +69,6 @@ RSVP translates to ECMAScript 5, and aims to be run under the Nashorn JavaScript
     object log: lg2console{
         //Intercepts receive events 'in transit' before they are dispatched to react blocks
         intercept DB::Request : {ID: id} {
-            console.log(id)
+            raise Console::Log : {data: id}
         }
     }
