@@ -1,0 +1,22 @@
+{
+  "name": "rsvp-lang",
+  "version": "1.0.0",
+  "description": "A prototype of an OO language with no methods",
+  "main": "container.js",
+  "scripts": {
+    "test": "echo \"Error no tests yet\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaedalusUsedPerl/rsvp-lang.git"
+  },
+  "keywords": [
+    "language"
+  ],
+  "author": "Shubham Joshi <shubhamjoshi@ucla.edu> (https://github.com/daedalususedperl)",
+  "license": "WTFPL v2",
+  "bugs": {
+    "url": "https://github.com/DaedalusUsedPerl/rsvp-lang/issues"
+  },
+  "homepage": "https://github.com/DaedalusUsedPerl/rsvp-lang#readme"
+}

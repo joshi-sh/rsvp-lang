@@ -1,5 +1,5 @@
 'use strict';
-var container = (function(){
+exports.container = (function(){
     var objects    = [];
     var trackers   = [];
     var fire = function(e, os){
@@ -25,12 +25,25 @@ var container = (function(){
           fire(a.event, objects.filter(function(o){return a.id.test(o.id);}));
       }
     };
+    //
+    //Set up standard events the container knows to deal with
+    //
+
+    //
+    //Console events
+    //
     var lg2console = {};
-    ct.addListener({
-        event : "Console::Log",
-	cb    : function(e){console.log(e.data);},
-	on    : lg2console,
-	id    : "lg2console"
+    ["Log", "Error", "Warn"].forEach(function(f){
+        ct.addListener({
+            event : "Console::" + f,
+            cb    : function(e){
+                        console[f.toLowerCase()].
+                              apply(console, [e.data].concat(e.args||[]));
+                    },
+            on    : lg2console,
+            id    : "lg2console"
+        });
     });
     return ct;
 })();
+
