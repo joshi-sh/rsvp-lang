@@ -9,7 +9,7 @@ RSVP is an object-oriented language that translates to JavaScript. RSVP has no m
    
     Declaration = Map | Object
     
-    Map = transformk identifier ">>|" Expression
+    Map = transformk eventId "(" identifier ("," identifier)* ")" Expression
    
     Object = objectk identifier (":" identifier)? "{" ReactBlock* "}"
     
@@ -21,16 +21,15 @@ RSVP is an object-oriented language that translates to JavaScript. RSVP has no m
     
     pattern = regex | identifier | literal | "_"
         
-    Statement = raisek Event
-              | alertk identifier Event
+    Statement = raisek "!"? Event
+              | alertk "!"? identifier Event
               | (any statement)
           
     Event = eventId ":" "{" Field ("," Field)* "}"
     
     Field = identifier ":" Expression
     
-    Expression = Expression ">>|" identifier
-               | (any expression)
+    Expression = (any expression)
         
     raisek     = "raise" ~alnum
     alertk     = "alert" ~alnum
@@ -69,6 +68,6 @@ RSVP translates to ECMAScript 5, and aims to be run under the Nashorn JavaScript
     object log: lg2console{
         //Intercepts receive events 'in transit' before they are dispatched to react blocks
         intercept DB::Request : {ID: id} {
-            raise Console::Log : {data: math::pow(id, 2)}
+            alert lg2console Console::Log : {data: math::pow(id, 2)}
         }
     }
