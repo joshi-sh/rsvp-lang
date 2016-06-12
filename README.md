@@ -11,9 +11,11 @@ RSVP is an object-oriented language that translates to JavaScript. RSVP has no m
     
     Map = transformk eventId "(" identifier ("," identifier)* ")" Expression
    
-    Object = objectk identifier (":" identifier)? "{" ReactBlock* "}"
+    Object = objectk identifier (":" identifier)? "{" (ReactBlock | InterceptBlock)* "}"
     
-    ReactBlock = reactk eventId (":" EventPattern)? "{" Statement* "}
+    ReactBlock = reactk eventId (":" EventPattern)? "{" Statement* "}"
+
+    InterceptBlock = interceptk eventId (":" EventPattern)? "{" Statement* "}"
     
     EventPattern = "{" FieldPattern ("," FieldPattern)* "}"
     
@@ -31,12 +33,13 @@ RSVP is an object-oriented language that translates to JavaScript. RSVP has no m
     
     Expression = (any expression)
         
-    raisek     = "raise" ~alnum
-    alertk     = "alert" ~alnum
-    objectk    = "object" ~alnum
-    identifier = alphabet (alnum*)
+    raisek     = "raise"     ~alnum
+    alertk     = "alert"     ~alnum
+    objectk    = "object"    ~alnum
+    interceptk = "intercept" ~alnum
     transformk = "transform" ~alnum
-    eventId    = identifier ("::" identifier)*
+    identifier = alphabet    (alnum*)
+    eventId    = identifier  ("::" identifier)*
 
 ##The Language 
 
