@@ -22,24 +22,26 @@ and  expr   = UndefLit  (*WHAT IS AN OPTION MONAD*)
             | ArrayLit  of expr list
             | OpExp     of value * op * value
             | ObjLit    of (var * expr) list
-            | AssignExp of var * expr
-            | IfExp     of expr * expr * expr
+            | AssignExp of bool * var * expr (*Do we include the var keyword in the translation?*)
+            | IfExp     of expr * expr * (expr option)
             | InvokeExp of expr * var * (expr list) (*Raise an error: You really shouldn't invoke a method in a language with no methods*)
             | Lambda    of (var list) * expr
             | Call      of expr * (expr list)
             | Raise     of event * bool
-            | Alert     of event * bool
+            | Alert     of string * event * bool
             | Regex     of string 
 (*WHAT IS A TYPE SYSTEM*)
-and   react     = event * expr list
-and   intercept = event * expr list
+and   react     = epattern * expr list
+and   intercept = epattern * expr list
 and   obj       = var * var * ((react, intercept) either list)
 (*The big guy*)
-and   event     = (var * pattern) list 
+and   epattern  = (var * pattern) list
 and   pattern   = Any
                 | ExactNum  of float
                 | ExactBool of bool
                 | ExactStr  of string
+                | RegexPat  of string
                 | ArrayPat  of pattern list
                 | ObjectPat of (var * pattern) list
+and   event     = (var * value) list  
 
