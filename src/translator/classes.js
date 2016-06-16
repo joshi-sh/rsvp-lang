@@ -33,7 +33,7 @@ exports.StrLit = function(str){
 exports.Var = function(v){
     return {
         translate: function(e){
-            return "" + v;
+            return (e[v] ? "__event." : "") + v;
         }
     };
 };
@@ -135,6 +135,54 @@ exports.Regex = function(re){
         translate: function(e){
             return "/" + re + "/";
         }
+    };
+};
+
+var translateBlock = function(message, epat, exprs){
+    var envVars = epat.getVariables();
+    return {
+        translate: function(e){
+            return "__container.add" + message + "({"+
+                     "event:" + epat.type + "," +
+                     "cb: function(__event){" + exprs.map(function(x){
+                         return x.translate(envVars);
+                     }).join(";") + "}," +
+                     "on: " + e.objectRef + "," +
+                     "id: \"" + e.objectId  + "\"" +
+                   "});";
+        }
+    };
+};
+
+exports.ReactBlock = function(epat, exprs){
+    return translateBlock("Listener", epat, exprs);
+};
+
+exports.InterceptBlock = function(epat, exprs){
+    return translateBlock("Intercept", epat, exprs);
+}
+exports.ObjectBlock = function(name, id, blocks){
+    return {
+        translate: function(e){
+            return blocks.map(function(b){
+                return b.translate({objectRef: id, objectId: name});
+            }).join(";");
+        }
+    };
+};
+
+exports.EventPattern = function(fields){
+    return {
+        getVariables: function(){
+            var env = {};
+            fields.patterns.filter(function(field){
+                return field[1] instanceof VarPattern;
+            }).forEach(function(field){
+                env[field[1].name] = true;
+            });
+            return env;
+        },
+        type: fields.type
     };
 };
 

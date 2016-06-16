@@ -35,7 +35,7 @@ and   react     = epattern * expr list
 and   intercept = epattern * expr list
 and   obj       = var * var * ((react, intercept) either list)
 (*The big guy*)
-and   epattern  = (var * pattern) list
+and   epattern  = string * ((var * pattern) list)
 and   pattern   = Any
                 | ExactNum  of float
                 | ExactBool of bool
