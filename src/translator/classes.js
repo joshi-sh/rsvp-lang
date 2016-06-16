@@ -96,7 +96,7 @@ exports.InvokeExp = function(obj, m, args){
 exports.Lambda = function(args, body){
     return {
         translate: function(e){
-            return "function(" + args.join(",") + "){return " + body.translate(e); + ";}";
+            return "function(" + args.join(",") + "){return " + body.translate(e) + ";}";
         }
     };
 };
