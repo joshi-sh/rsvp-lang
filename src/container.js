@@ -1,5 +1,5 @@
 'use strict';
-exports.container = (function(){
+container = (function(){
     //Objects that register react bocks
     var objects   = [];
     //Objects that register intercept blocks
@@ -13,9 +13,9 @@ exports.container = (function(){
           //call the registered callback on the supplied this parameter
           forEach(function(o){o.cb.call(o.on, e);});
     };
-    var ct = {
+    return {
         //Register an object's react block
-        addListener: function(a){
+        addListener: function({event, callback, thisArg, id}){
             objects.push({e: a.event, cb: a.callback, on: a.thisArg, id: a.id});
         },
         //Register an object's intercept block
@@ -25,10 +25,16 @@ exports.container = (function(){
         //Queue an event raised within a react block
         queueRaise: function(a){
             dispatchQ.push({raise: true, event: a});
+            if(dispatchQ.length === 1){
+                this.deliver();
+            }
         },
         //Queue an alert raised within a react block
         queueAlert: function(a){
             dispatchQ.push({event: a});
+            if(dispatchQ.length === 1){
+                this.deliver();
+            }
         },
         //Broadcast an event to all objects
         fireEvent: function(e){
@@ -48,29 +54,8 @@ exports.container = (function(){
                 }else{
                     sendMessage(x.event);
                 }
-            });
+            };
         }
     };
-
-    //
-    //Set up standard events the container knows to deal with
-    //
-
-    //
-    //Console events
-    //
-    var lg2console = {};
-    ["Log", "Error", "Warn"].forEach(function(f){
-        ct.addListener({
-            event : "Console::" + f,
-            cb    : function(e){
-                        console[f.toLowerCase()].
-                              apply(console, [e.data].concat(e.args||[]));
-                    },
-            on    : lg2console,
-            id    : "lg2console"
-        });
-    });
-    return ct;
-})();
+}());
 

@@ -5,6 +5,8 @@ RSVP is an object-oriented language that translates to JavaScript. RSVP has no m
 
 ##Simplified grammar
 
+Please see `docs/ast.ml` for the complete grammar.
+
     Program = Declaration*
    
     Declaration = Map | Object
@@ -49,7 +51,7 @@ RSVP's execution is modelled as a group of objects that dispatch events to and r
 
 RSVP allows for functions as purely functional transforms of inputs to outputs. Transforms do not allow side-effects: side-effects can be caused within an event block by updating a member variable or `raise`ing an event the container understands. 
 
-RSVP translates to ECMAScript 5, and aims to be run under the Nashorn JavaScript Engine to allow interperability with other JVM languages. 
+RSVP translates to ~~ECMAScript 5, and aims to be run under the Nashorn JavaScript Engine to allow interperability with other JVM languages~~ ES6 and runs on Node. 
 
 ## Code examples
 
@@ -68,7 +70,7 @@ RSVP translates to ECMAScript 5, and aims to be run under the Nashorn JavaScript
         }
     }
 
-    object log: lg2console{
+    object log{
         //Intercepts receive events 'in transit' before they are dispatched to react blocks
         intercept DB::Request : {ID: id} {
             alert lg2console Console::Log : {data: math::pow(id, 2)}
