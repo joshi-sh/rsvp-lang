@@ -20,7 +20,7 @@ and  expr   = UndefLit  (*WHAT IS AN OPTION MONAD*)
             | StrLit    of string
             | Var       of var
             | ArrayLit  of expr list
-            | OpExp     of value * op * value
+            | OpExp     of expr * op * expr
             | ObjLit    of (var * expr) list
             | AssignExp of bool * var * expr (*Do we include the var keyword in the translation?*)
             | IfExp     of expr * expr * (expr option)
