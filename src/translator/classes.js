@@ -77,8 +77,7 @@ exports.AssignExp = function(isVar, v, exp){
 exports.IfExp = function(p, c, a){
     return {
         translate: function(e){
-            return "if(" + p.translate(e) + "){" + c.translate(e) + 
-                   (a ? ("}else{" + a.translate(e)) : "") + "}";
+            return "(function(__p){if(__p){return (" + c.translate(e) ");}else{return (" + a.translate(e) + ");}})(" + p.translate(e) + ")";
         }
     };
 }
