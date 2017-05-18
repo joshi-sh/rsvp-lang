@@ -6,45 +6,45 @@ container = (function(){
     var trackers  = [];
     //Events raised in the middle of a react block are dispatched at the end
     var dispatchQ = [];
-    var fire = function(e, os){
-        os.
+    var fire = function(event, objects){
+        objects.
           //grab all objects interested in listening to this event
-          filter(function(o){return o.e.name.test(e.name);}).
+          filter(function(object){return object.event.name.test(event.name);}).
           //call the registered callback on the supplied this parameter
-          forEach(function(o){o.cb.call(o.on, e);});
+          forEach(function(object){object.callback.call(object.thisArg, event);});
     };
     return {
         //Register an object's react block
-        addListener: function({event, callback, thisArg, id}){
-            objects.push({e: a.event, cb: a.callback, on: a.thisArg, id: a.id});
+        addListener: function(listener = {event, callback, thisArg, id}){
+            objects.push(listener);
         },
         //Register an object's intercept block
-        addIntercept: function(a){
-            trackers.push({e: a.event, cb: a.callback, on: a.thisArg});
+        addIntercept: function(intercept = {event, callback, thisArg}){
+            trackers.push(intercept);
         },
         //Queue an event raised within a react block
-        queueRaise: function(a){
-            dispatchQ.push({raise: true, event: a});
+        queueRaise: function(message){
+            dispatchQ.push({raise: true, event: message});
             if(dispatchQ.length === 1){
                 this.deliver();
             }
         },
         //Queue an alert raised within a react block
-        queueAlert: function(a){
-            dispatchQ.push({event: a});
+        queueAlert: function(message){
+            dispatchQ.push({event: message});
             if(dispatchQ.length === 1){
                 this.deliver();
             }
         },
         //Broadcast an event to all objects
-        fireEvent: function(e){
-            fire(e, trackers);
-            fire(e, objects);
+        fireEvent: function(event){
+            fire(event, trackers);
+            fire(event, objects);
         },
         //Broadcast an event to selected objects
-        sendMessage: function(a){
-            fire(a.event, trackers);
-            fire(a.event, objects.filter(function(o){return a.id.test(o.id);}));
+        sendMessage: function(message){
+            fire(message.event, trackers);
+            fire(message.event, objects.filter(function(object){return message.id.test(object.id);}));
         },
         //Asynchronously deliver events
         deliver: function(){
