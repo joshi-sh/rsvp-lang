@@ -1,5 +1,5 @@
 'use strict';
-container = (function(){
+__container = (function(){
     //Objects that register react bocks
     var objects   = [];
     //Objects that register intercept blocks
