@@ -143,10 +143,10 @@ var translateBlock = function(message, epat, exprs){
         translate: function(e){
             return "__container.add" + message + "({"+
                      "event:" + epat.type + "," +
-                     "cb: function(__event){" + exprs.map(function(x){
+                     "callback: function(__event){" + exprs.map(function(x){
                          return x.translate(envVars);
                      }).join(";") + "}," +
-                     "on: " + e.objectRef + "," +
+                     "thisArg: " + e.objectRef + "," +
                      "id: \"" + e.objectId  + "\"" +
                    "});";
         }

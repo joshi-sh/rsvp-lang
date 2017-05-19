@@ -1,9 +1,9 @@
 # RSVP
-###There's no method to this madness
+### There's no method to this madness
 
 RSVP is an object-oriented language that translates to JavaScript. RSVP has no methods on its objects: all message passing is abstracted out as events. In this manner, certain aspects of software construction can be made trivial: a cross-cutting concern like logging is the same as receiving a message. 
 
-##Simplified grammar
+## Simplified grammar
 
 Please see `docs/ast.ml` for the complete grammar.
 
@@ -43,7 +43,7 @@ Please see `docs/ast.ml` for the complete grammar.
     identifier = alphabet    (alnum*)
     eventId    = identifier  ("::" identifier)*
 
-##The Language 
+## The Language 
 
 ![Quick look at an event](http://i.imgur.com/1Par345.png)
 
