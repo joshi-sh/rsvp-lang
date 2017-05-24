@@ -1,1 +1,5 @@
+# Project
+/node_modules/
+
+# NetBeans
 /nbproject/

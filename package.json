@@ -18,5 +18,11 @@
   "bugs": {
     "url": "https://github.com/DaedalusUsedPerl/rsvp-lang/issues"
   },
-  "homepage": "https://github.com/DaedalusUsedPerl/rsvp-lang#readme"
+  "homepage": "https://github.com/DaedalusUsedPerl/rsvp-lang#readme",
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1"
+  }
 }
